@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+    <definition name="default" template="/WEB-INF/jsp/main.jsp">
+        <put-attribute name="header" value="/WEB-INF/jsp/layouts/header.jsp"/>
+        <put-attribute name="body" value=""/>
+        <put-attribute name="resources" value=""/>
+        <put-attribute name="footer" value="/WEB-INF/jsp/layouts/footer.jsp"/>
+    </definition>
+
+    <definition name="main" extends="default">
+        <put-attribute name="body" value="/WEB-INF/jsp/layouts/login.jsp"/>
+        <put-attribute name="resources" value=""/>
+    </definition>
+
+    <definition name="chat" extends="default">
+        <put-attribute name="body" value="/WEB-INF/jsp/layouts/chat.jsp"/>
+        <put-attribute name="resources" value="/WEB-INF/jsp/resources/chatResources.jsp"/>
+    </definition>
+
+</tiles-definitions>
