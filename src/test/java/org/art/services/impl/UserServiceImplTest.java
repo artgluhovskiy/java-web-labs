@@ -29,7 +29,6 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.intThat;
 import static org.mockito.Mockito.*;
 
-@RunWith(MockitoJUnitRunner.class)
 class UserServiceImplTest {
 
     private UserService userService;
@@ -61,12 +60,7 @@ class UserServiceImplTest {
         when(list.get(anyInt())).thenReturn("A");
         when(list.get(eq(1))).thenReturn("B");
 
-        ArgumentMatcher<Integer> matcher = new ArgumentMatcher<Integer>() {
-            @Override
-            public boolean matches(Object arg) {
-                return ((Integer) arg) % 3 == 0;
-            }
-        };
+        ArgumentMatcher<Integer> matcher = integer -> integer % 3 == 0;
         when(list.get(intThat(matcher))).thenReturn("C");
 
         for (int i = 0; i < 10; i++) {
