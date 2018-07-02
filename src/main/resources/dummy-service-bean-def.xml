@@ -7,9 +7,9 @@
 
     <import resource="services.xml"/>
 
-    <context:component-scan base-package="org.art.services.dummy"/>
+    <context:component-scan base-package="org.art.java_web.labs.services.dummy"/>
 
-    <bean id="dummyService1" class="org.art.services.dummy.DummyServiceImpl">
+    <bean id="dummyService1" class="org.art.java_web.labs.services.dummy.DummyServiceImpl">
 
     </bean>
 

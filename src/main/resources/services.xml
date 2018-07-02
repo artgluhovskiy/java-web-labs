@@ -13,7 +13,7 @@
 
     <!-- Date/Time Service Bean definition -->
     <!-- Bean instantiation via constructor -->
-    <bean id="dateTimeService_constr" class="org.art.services.impl.DateTimeServiceImpl"
+    <bean id="dateTimeService_constr" class="org.art.java_web.labs.services.impl.DateTimeServiceImpl"
           init-method="initMethod" destroy-method="destroyMethod">
         <property name="serviceId" value="date_time_service_1_constr"/>
     </bean>
@@ -22,32 +22,32 @@
 
     <!-- Bean instantiation via static factory method -->
     <bean id="dateTimeService_stat_factory"
-          class="org.art.services.impl.DateTimeServiceImpl"
+          class="org.art.java_web.labs.services.impl.DateTimeServiceImpl"
           factory-method="createDateTimeService">
         <constructor-arg type="java.lang.String" value="date_time_service_2_stat_factory"/>
     </bean>
 
     <!-- Bean instantiation via the factory bean (service locator) -->
-    <bean id="serviceLocator" class="org.art.services.impl.ServiceLocator"/>
+    <bean id="serviceLocator" class="org.art.java_web.labs.services.impl.ServiceLocator"/>
 
     <bean id="dateTimeService_bean_factory"
           factory-bean="serviceLocator"
           factory-method="createDateTimeService"/>
 
-    <bean id="dateTimeService_constr_arg" class="org.art.services.impl.DateTimeServiceImpl">
+    <bean id="dateTimeService_constr_arg" class="org.art.java_web.labs.services.impl.DateTimeServiceImpl">
         <constructor-arg name="serviceId" value="date_time_service_4_constr_arg"/>
     </bean>
 
     <!-- Message Service Bean definition -->
-    <bean id="messageService" class="org.art.services.impl.MessageServiceImpl"
+    <bean id="messageService" class="org.art.java_web.labs.services.impl.MessageServiceImpl"
           init-method="initMethod">
         <constructor-arg type="java.lang.String" value="message_service_1"/>
         <property name="dateTimeService" ref="dateTimeService_constr"/>
     </bean>
 
     <!-- Chat Bean definitions -->
-    <bean id="userService" class="org.art.services.impl.UserServiceImpl"/>
+    <bean id="userService" class="org.art.java_web.labs.services.impl.UserServiceImpl"/>
 
-    <bean id="chatImpl" class="org.art.services.chat.ChatImpl" init-method="initChatImpl"/>
+    <bean id="chatImpl" class="org.art.java_web.labs.services.chat.ChatImpl" init-method="initChatImpl"/>
 
 </beans>
