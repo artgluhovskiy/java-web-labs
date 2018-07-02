@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 class DummyServiceImplTest {
 
     private static final String BEAN_DEF_NAME = "web-labs.xml";
@@ -19,10 +21,16 @@ class DummyServiceImplTest {
     }
 
     @Test
-    @DisplayName("Bean initialization test")
+    @DisplayName("Bean test")
     void test() {
-        DummyService dummyService = context.getBean("dummyService", DummyServiceImpl.class);
-        System.out.println(dummyService.echo("Hello!"));
+        String param = "Hello";
+        DummyService dummyService = context.getBean("dummyService", DummyService.class);
+
+        String retString = dummyService.echo(param);
+        assertEquals(param, retString);
+
+        String result = dummyService.getHello();
+        assertEquals("Hello", result);
     }
 
     @AfterAll

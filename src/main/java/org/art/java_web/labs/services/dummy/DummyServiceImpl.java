@@ -3,10 +3,8 @@ package org.art.java_web.labs.services.dummy;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.art.java_web.labs.web.annotations.Profiling;
-import org.springframework.beans.factory.InitializingBean;
 
-@Profiling
-public class DummyServiceImpl implements DummyService, InitializingBean {
+public class DummyServiceImpl implements DummyService {
 
     private static final Logger LOG = LogManager.getLogger(DummyServiceImpl.class);
 
@@ -19,9 +17,15 @@ public class DummyServiceImpl implements DummyService, InitializingBean {
         this.serviceName = serviceName;
     }
 
+    @Profiling
     @Override
     public String echo(String str) {
         return str;
+    }
+
+    @Profiling
+    public String getHello() {
+        return "Hello";
     }
 
     public String getServiceName() {
@@ -30,10 +34,5 @@ public class DummyServiceImpl implements DummyService, InitializingBean {
 
     public void setServiceName(String serviceName) {
         this.serviceName = serviceName;
-    }
-
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        LOG.info("*** DummyServiceImpl. afterPropertiesSet()");
     }
 }
