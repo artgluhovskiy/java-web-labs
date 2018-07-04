@@ -3,12 +3,13 @@ package org.art.java_web.labs.entities;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Data
 @NoArgsConstructor
+@Entity
 public class User {
 
     public User(Long id, String fName, String lName, String login, String regDate, Role role) {
@@ -20,6 +21,8 @@ public class User {
         this.role = role;
     }
 
+    @Id
+    @GeneratedValue
     @Column(name = "USER_ID")
     private Long id;
 
@@ -38,6 +41,7 @@ public class User {
     @Column(name = "ROLE")
     private Role role;
 
+    @Transient
     private Set<String> chatRooms = new HashSet<>();
 
     @Override
