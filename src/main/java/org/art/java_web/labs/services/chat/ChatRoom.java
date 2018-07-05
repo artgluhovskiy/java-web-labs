@@ -2,8 +2,8 @@ package org.art.java_web.labs.services.chat;
 
 import lombok.Data;
 import lombok.ToString;
-import org.art.java_web.labs.entities.Message;
-import org.art.java_web.labs.entities.User;
+import org.art.java_web.labs.entities.chat.Message;
+import org.art.java_web.labs.entities.chat.User;
 
 import java.util.*;
 

@@ -20,7 +20,7 @@
     </bean>
 
     <!-- Initial users -->
-    <bean id="user1" class="org.art.java_web.labs.entities.User"
+    <bean id="user1" class="org.art.java_web.labs.entities.chat.User"
           p:id="1"
           p:FName="Alex"
           p:LName="Suhachev"
@@ -28,7 +28,7 @@
           p:regDate="23.03.2018"
           p:role="USER"/>
 
-    <bean id="user2" class="org.art.java_web.labs.entities.User"
+    <bean id="user2" class="org.art.java_web.labs.entities.chat.User"
           p:id="2"
           p:FName="Max"
           p:LName="Nilson"

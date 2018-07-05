@@ -2,7 +2,7 @@ package org.art.java_web.labs.services.impl;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.art.java_web.labs.entities.User;
+import org.art.java_web.labs.entities.chat.User;
 import org.art.java_web.labs.services.DateTimeService;
 import org.art.java_web.labs.services.MessageService;
 import org.art.java_web.labs.services.beans.Message;

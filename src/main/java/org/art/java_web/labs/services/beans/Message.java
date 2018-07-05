@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.art.java_web.labs.entities.User;
+import org.art.java_web.labs.entities.chat.User;
 
 @Data
 @ToString

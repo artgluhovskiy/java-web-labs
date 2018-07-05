@@ -1,7 +1,7 @@
 package org.art.java_web.labs.services.chat;
 
-import org.art.java_web.labs.entities.Role;
-import org.art.java_web.labs.entities.User;
+import org.art.java_web.labs.entities.chat.Role;
+import org.art.java_web.labs.entities.chat.User;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;

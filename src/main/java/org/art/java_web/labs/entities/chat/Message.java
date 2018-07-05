@@ -1,4 +1,4 @@
-package org.art.java_web.labs.entities;
+package org.art.java_web.labs.entities.chat;
 
 import lombok.*;
 

@@ -4,7 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.art.java_web.labs.dao.UserDao;
 import org.art.java_web.labs.dao.exceptions.DAOSystemException;
-import org.art.java_web.labs.entities.User;
+import org.art.java_web.labs.entities.chat.User;
 import org.art.java_web.labs.services.UserService;
 import org.art.java_web.labs.services.exceptions.ServiceBusinessException;
 import org.art.java_web.labs.services.exceptions.ServiceSystemException;

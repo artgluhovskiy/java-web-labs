@@ -1,6 +1,6 @@
 package org.art.java_web.labs.services;
 
-import org.art.java_web.labs.entities.User;
+import org.art.java_web.labs.entities.chat.User;
 import org.art.java_web.labs.services.beans.Message;
 
 public interface MessageService {

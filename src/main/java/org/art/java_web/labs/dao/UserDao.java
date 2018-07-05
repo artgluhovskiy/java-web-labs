@@ -1,7 +1,7 @@
 package org.art.java_web.labs.dao;
 
 import org.art.java_web.labs.dao.exceptions.DAOSystemException;
-import org.art.java_web.labs.entities.User;
+import org.art.java_web.labs.entities.chat.User;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package org.art.java_web.labs.services.chat;
 
-import org.art.java_web.labs.entities.Message;
+import org.art.java_web.labs.entities.chat.Message;
 
 public interface ChatFilter {
 

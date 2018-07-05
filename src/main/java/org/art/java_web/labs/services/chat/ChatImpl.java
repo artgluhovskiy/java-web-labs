@@ -2,9 +2,9 @@ package org.art.java_web.labs.services.chat;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.art.java_web.labs.entities.Message;
-import org.art.java_web.labs.entities.Role;
-import org.art.java_web.labs.entities.User;
+import org.art.java_web.labs.entities.chat.Message;
+import org.art.java_web.labs.entities.chat.Role;
+import org.art.java_web.labs.entities.chat.User;
 
 import java.time.LocalDate;
 import java.util.*;

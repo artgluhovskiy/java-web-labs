@@ -2,7 +2,7 @@ package org.art.java_web.labs.web.responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.art.java_web.labs.entities.Message;
+import org.art.java_web.labs.entities.chat.Message;
 
 @Data
 @AllArgsConstructor

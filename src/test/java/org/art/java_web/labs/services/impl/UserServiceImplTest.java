@@ -2,8 +2,8 @@ package org.art.java_web.labs.services.impl;
 
 import org.art.java_web.labs.dao.UserDao;
 import org.art.java_web.labs.dao.exceptions.DAOSystemException;
-import org.art.java_web.labs.entities.Role;
-import org.art.java_web.labs.entities.User;
+import org.art.java_web.labs.entities.chat.Role;
+import org.art.java_web.labs.entities.chat.User;
 import org.art.java_web.labs.services.UserService;
 import org.art.java_web.labs.services.exceptions.ServiceBusinessException;
 import org.art.java_web.labs.services.exceptions.ServiceSystemException;
