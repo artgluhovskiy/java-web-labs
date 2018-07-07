@@ -1,22 +1,31 @@
 package org.art.java_web.labs.entities.simple_domain_test_model;
 
-import org.hibernate.annotations.Formula;
-import org.hibernate.annotations.GenericGenerator;
+import org.art.java_web.labs.entities.simple_domain_test_model.enums.Role;
+import org.hibernate.annotations.*;
 import org.hibernate.annotations.Parameter;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
+@DynamicUpdate
 @Table(name = "USERS")
 public class User {
 
-    public User() {}
+    public User() {
+    }
 
-    public User(String firstName, String lastName) {
+    public User(String firstName, String lastName, Address homeAddress, Role role) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.homeAddress = homeAddress;
+        this.role = role;
     }
 
     @Id
@@ -59,6 +68,29 @@ public class User {
     @Formula(value = " concat(FIRST_NAME, ' ', LAST_NAME) ")
     private String fullName;
 
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "street", column = @Column(name = "STREET")),
+            @AttributeOverride(name = "zipcode", column = @Column(name = "ZIP")),
+            @AttributeOverride(name = "city", column = @Column(name = "CITY"))
+    })
+    private Address homeAddress;
+
+    @CreationTimestamp
+    @Column(updatable = false, name = "REG_DATE")
+    private Date regDate;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "DEFAULT_BILLING_ID")
+    private BillingDetails defaultBilling;
+
+    @OneToMany(mappedBy = "owner")
+    private Set<BillingDetails> additionalBillings = new HashSet<>();
+
     public Long getId() {
         return id;
     }
@@ -83,12 +115,50 @@ public class User {
         return fullName;
     }
 
+    public Address getHomeAddress() {
+        return homeAddress;
+    }
+
+    public void setHomeAddress(Address homeAddress) {
+        this.homeAddress = homeAddress;
+    }
+
+    public Date getRegDate() {
+        return regDate;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public BillingDetails getDefaultBilling() {
+        return defaultBilling;
+    }
+
+    public void setDefaultBilling(BillingDetails defaultBilling) {
+        this.defaultBilling = defaultBilling;
+    }
+
+    public Set<BillingDetails> getAdditionalBillings() {
+        return additionalBillings;
+    }
+
+    public void setAdditionalBillings(Set<BillingDetails> additionalBillings) {
+        this.additionalBillings = additionalBillings;
+    }
+
     @Override
     public String toString() {
-        return "User {" +
-                "id = " + id +
-                ", firstName = '" + firstName + '\'' +
-                ", lastName = '" + lastName + '\'' +
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", homeAddress=" + homeAddress +
+                ", regDate=" + regDate +
+                ", role=" + role +
+                ", defaultBilling=" + defaultBilling +
+                ", additionalBillings=" + additionalBillings +
                 '}';
     }
 }

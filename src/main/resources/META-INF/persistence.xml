@@ -27,6 +27,10 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
         <class>org.art.java_web.labs.entities.simple_domain_test_model.User</class>
+        <class>org.art.java_web.labs.entities.simple_domain_test_model.BillingDetails</class>
+        <class>org.art.java_web.labs.entities.simple_domain_test_model.CreditCard</class>
+        <class>org.art.java_web.labs.entities.simple_domain_test_model.BankAccount</class>
+
         <!--<class>org.art.java_web.labs.entities.simple_domain_test_modell.Bid</class>-->
         <!--<class>org.art.java_web.labs.entities.simple_domain_test_modell.Item</class>-->
 
