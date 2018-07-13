@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd">
+
+    <defaultCache
+            maxEntriesLocalHeap="500"
+            eternal="false"
+            timeToIdleSeconds="1200"
+            timeToLiveSeconds="1200">
+    </defaultCache>
+
+    <cache name="org.art.web.labs.model.User"
+           maxEntriesLocalHeap="500"
+           eternal="false"
+           timeToIdleSeconds="300"
+           timeToLiveSeconds="600"
+           memoryStoreEvictionPolicy="FIFO"/>
+
+</ehcache>
