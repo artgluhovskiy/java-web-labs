@@ -5,13 +5,17 @@ import org.apache.logging.log4j.Logger;
 import org.art.web.memoization.annotations.Memoize;
 import org.art.web.memoization.jmx.MemoizationConfig;
 import org.art.web.memoization.pojo.InvocationContext;
+import org.art.web.memoization.services.CacheService;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.BeanInitializationException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.management.*;
 import java.lang.management.ManagementFactory;
 import java.util.Map;
@@ -29,11 +33,16 @@ public class MemoizationAspect {
 
     private static final Logger LOG = LogManager.getLogger(MemoizationAspect.class);
 
+    private static final String JMX_BEAN_NAME = "org.art.web.memoization.jmx:type=MemoizationConfig";
+
     private MemoizationConfig jmxConfig;
 
-    private final Map<InvocationContext, Object> cache = new ConcurrentHashMap<>();
+    private CacheService cache;
 
-    private static final Object DUMMY = new Object();
+    @Autowired
+    public MemoizationAspect(CacheService cache) {
+        this.cache = cache;
+    }
 
     @PostConstruct
     public void init() {
@@ -42,7 +51,7 @@ public class MemoizationAspect {
         try {
             this.jmxConfig = new MemoizationConfig();
             MBeanServer platformMBeanServer = ManagementFactory.getPlatformMBeanServer();
-            ObjectName mBeanName = new ObjectName("org.art.web.memoization.jmx:type=MemoizationConfig");
+            ObjectName mBeanName = new ObjectName(JMX_BEAN_NAME);
             platformMBeanServer.registerMBean(jmxConfig, mBeanName);
         } catch (Exception e) {
             LOG.error("MemoizationAspect: init() - initialization failed!", e);
@@ -50,7 +59,7 @@ public class MemoizationAspect {
         }
     }
 
-    @Around("@annotation(org.art.web.memoization.annotations.Memoize) && execution(* *(..))")
+    @Around("execution(* *(..)) && @annotation(org.art.web.memoization.annotations.Memoize)")
     public Object memoizeResult(ProceedingJoinPoint joinPoint) throws Throwable {
         Object result;
         if (jmxConfig != null && jmxConfig.isMemoizationEnabled()) {
@@ -71,5 +80,12 @@ public class MemoizationAspect {
             result = joinPoint.proceed();
         }
         return result;
+    }
+
+    @PreDestroy
+    public void destroy() throws Exception {
+        MBeanServer platformMBeanServer = ManagementFactory.getPlatformMBeanServer();
+        ObjectName mBeanName = new ObjectName(JMX_BEAN_NAME);
+        platformMBeanServer.unregisterMBean(mBeanName);
     }
 }

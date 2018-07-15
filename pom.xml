@@ -27,7 +27,7 @@
         <mysql-connector.version>5.1.40</mysql-connector.version>
         <dbcp.version>2.1.1</dbcp.version>
         <spring.version>5.0.4.RELEASE</spring.version>
-        <aspectj.version>1.6.11</aspectj.version>
+        <aspectj.version>1.9.1</aspectj.version>
         <spring-data.version>2.0.1.RELEASE</spring-data.version>
         <hibernate.version>5.2.11.Final</hibernate.version>
         <servlet.version>3.1.0</servlet.version>

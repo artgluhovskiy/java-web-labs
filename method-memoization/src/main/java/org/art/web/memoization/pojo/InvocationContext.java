@@ -49,7 +49,7 @@ public class InvocationContext {
     @Override
     public String toString() {
         return "InvocationContext {" +
-                "targetClass = " + targetClass +
+                "targetClass = " + targetClass.getSimpleName() +
                 ", targetMethod = '" + targetMethod + '\'' +
                 ", args = " + Arrays.toString(args) +
                 '}';
