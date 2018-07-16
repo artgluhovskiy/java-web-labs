@@ -5,9 +5,12 @@ import org.apache.logging.log4j.Logger;
 import org.art.web.profiling.annotations.Profiling;
 import org.art.web.profiling.jmx.ProfilingConfig;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.util.ReflectionUtils;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
 import java.lang.management.ManagementFactory;
@@ -17,6 +20,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * {@link BeanPostProcessor} implementation
@@ -29,18 +33,27 @@ public class ProfilingAnnotationBeanPostProcessor implements BeanPostProcessor {
 
     private static final Logger LOG = LogManager.getLogger(ProfilingAnnotationBeanPostProcessor.class);
 
+    private static final String JMX_CONFIG_BEAN_NAME = "org.art.web.chat.jmx:type=ProfilingConfig";
+
     private ProfilingConfig profilingConfig;
 
-    private final Map<String, Class> targetBeanClasses = new HashMap<>();
+    private final Map<String, Class> targetBeanClasses = new ConcurrentHashMap<>();
 
-    private final Map<String, Set<String>> targetBeanMethods = new HashMap<>();
+    private final Map<String, Set<String>> targetBeanMethods = new ConcurrentHashMap<>();
 
-    public ProfilingAnnotationBeanPostProcessor() throws Exception {
+    @PostConstruct
+    public void init() {
+        LOG.debug("ProfilingAnnotationBeanPostProcessor: init()");
         //Profiling config JMX MBean registering
-        this.profilingConfig = new ProfilingConfig();
-        MBeanServer platformMBeanServer = ManagementFactory.getPlatformMBeanServer();
-        ObjectName mBeanName = new ObjectName("org.art.web.chat.jmx:type=ProfilingConfig");
-        platformMBeanServer.registerMBean(profilingConfig, mBeanName);
+        try {
+            this.profilingConfig = new ProfilingConfig();
+            MBeanServer platformMBeanServer = ManagementFactory.getPlatformMBeanServer();
+            ObjectName mBeanName = new ObjectName(JMX_CONFIG_BEAN_NAME);
+            platformMBeanServer.registerMBean(profilingConfig, mBeanName);
+        } catch (Exception e) {
+            LOG.error("ProfilingAnnotationBeanPostProcessor: init() - initialization failed!", e);
+            throw new BeanInitializationException("ProfilingAnnotationBeanPostProcessor: initialization failed!");
+        }
     }
 
     @Override
@@ -103,11 +116,18 @@ public class ProfilingAnnotationBeanPostProcessor implements BeanPostProcessor {
             long start = System.nanoTime();
             ret = ReflectionUtils.invokeMethod(method, bean, args);
             long end = System.nanoTime();
-            LOG.info("*** End profiling. Bean {}: method name: {}. Elapsed time: {} mcs",
-                    beanName, method.getName(), (end - start) / (long) 10e3);
+            LOG.info("*** End profiling. Bean {}: method name: {}. Elapsed time: {} ms",
+                    beanName, method.getName(), (end - start) / (long) 1e6);
         } else {
             ret = ReflectionUtils.invokeMethod(method, bean, args);
         }
         return ret;
+    }
+
+    @PreDestroy
+    public void destroy() throws Exception {
+        MBeanServer platformMBeanServer = ManagementFactory.getPlatformMBeanServer();
+        ObjectName mBeanName = new ObjectName(JMX_CONFIG_BEAN_NAME);
+        platformMBeanServer.unregisterMBean(mBeanName);
     }
 }

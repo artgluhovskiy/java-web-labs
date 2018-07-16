@@ -9,7 +9,6 @@ import org.art.web.memoization.services.CacheService;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,8 +17,6 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.management.*;
 import java.lang.management.ManagementFactory;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Provides the 'memoize' functionality for methods
@@ -33,7 +30,7 @@ public class MemoizationAspect {
 
     private static final Logger LOG = LogManager.getLogger(MemoizationAspect.class);
 
-    private static final String JMX_BEAN_NAME = "org.art.web.memoization.jmx:type=MemoizationConfig";
+    private static final String JMX_CONFIG_BEAN_NAME = "org.art.web.memoization.jmx:type=MemoizationConfig";
 
     private MemoizationConfig jmxConfig;
 
@@ -51,7 +48,7 @@ public class MemoizationAspect {
         try {
             this.jmxConfig = new MemoizationConfig();
             MBeanServer platformMBeanServer = ManagementFactory.getPlatformMBeanServer();
-            ObjectName mBeanName = new ObjectName(JMX_BEAN_NAME);
+            ObjectName mBeanName = new ObjectName(JMX_CONFIG_BEAN_NAME);
             platformMBeanServer.registerMBean(jmxConfig, mBeanName);
         } catch (Exception e) {
             LOG.error("MemoizationAspect: init() - initialization failed!", e);
@@ -85,7 +82,7 @@ public class MemoizationAspect {
     @PreDestroy
     public void destroy() throws Exception {
         MBeanServer platformMBeanServer = ManagementFactory.getPlatformMBeanServer();
-        ObjectName mBeanName = new ObjectName(JMX_BEAN_NAME);
+        ObjectName mBeanName = new ObjectName(JMX_CONFIG_BEAN_NAME);
         platformMBeanServer.unregisterMBean(mBeanName);
     }
 }

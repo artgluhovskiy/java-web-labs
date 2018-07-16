@@ -1,4 +1,4 @@
-package org.art.web.async;
+package org.art.web.async.jobs;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

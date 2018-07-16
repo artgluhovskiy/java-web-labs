@@ -2,7 +2,7 @@ package org.art.web.async.servlets;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.art.web.async.AsyncRequestProcessor;
+import org.art.web.async.jobs.AsyncRequestProcessor;
 import org.art.web.async.listeners.AppAsyncListener;
 
 import javax.servlet.AsyncContext;
@@ -35,6 +35,6 @@ public class AsynchronousServlet extends HttpServlet {
         executor.submit(new AsyncRequestProcessor(asyncContext, secs));
         long endTime = System.currentTimeMillis();
         LOG.info("AsynchronousServlet: doGet. Thread: " + Thread.currentThread().getName() + ", id: " + Thread.currentThread().getId()
-                + ", time taken: " + (endTime - startTime) + " ms.");
+                + ", elapsed time: " + (endTime - startTime) + " ms.");
     }
 }
