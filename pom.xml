@@ -12,6 +12,7 @@
         <module>method-memoization</module>
         <module>custom-profiling</module>
         <module>non-blocking-request-processing</module>
+        <module>hibernate-integration</module>
     </modules>
 
     <properties>
