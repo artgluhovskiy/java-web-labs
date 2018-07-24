@@ -31,7 +31,6 @@ public abstract class BillingDetails {
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumn(name = "OWNER_ID")
     private User owner;
 
     public Long getId() {

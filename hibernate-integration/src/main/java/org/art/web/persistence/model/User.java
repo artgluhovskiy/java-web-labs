@@ -6,6 +6,7 @@ import org.hibernate.annotations.*;
 import org.hibernate.annotations.Parameter;
 
 import javax.persistence.*;
+import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -16,6 +17,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@FetchProfiles(
+        @FetchProfile(name = User.PROFILE_JOIN_BILLINGS,
+        fetchOverrides = @FetchProfile.FetchOverride(
+                entity = User.class,
+                association = "additionalBillings",
+                mode = FetchMode.JOIN
+        ))
+)
 @Cacheable
 @Cache(
         usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE,
@@ -24,6 +33,8 @@ import java.util.Set;
 @DynamicUpdate
 @Table(name = "USERS")
 public class User {
+
+    public static final String PROFILE_JOIN_BILLINGS = "User. Fetch profile: join billings";
 
     public User() {
     }
@@ -91,7 +102,8 @@ public class User {
     @JoinColumn(name = "DEFAULT_BILLING_ID")
     private BillingDetails defaultBilling;
 
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.PERSIST)
+    @LazyCollection(LazyCollectionOption.EXTRA)
     private Set<BillingDetails> additionalBillings = new HashSet<>();
 
     @OneToMany(
@@ -150,6 +162,10 @@ public class User {
 
     public void setDefaultBilling(BillingDetails defaultBilling) {
         this.defaultBilling = defaultBilling;
+    }
+
+    public void setAdditionalBillings(Set<BillingDetails> additionalBillings) {
+        this.additionalBillings = additionalBillings;
     }
 
     public Set<BillingDetails> getAdditionalBillings() {
