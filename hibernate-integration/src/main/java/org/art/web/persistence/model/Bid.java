@@ -4,6 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "BIDS")
@@ -11,8 +12,7 @@ public class Bid {
 
     public Bid() {}
 
-    public Bid(Item item, String type) {
-        this.item = item;
+    public Bid(String type) {
         this.type = type;
     }
 
@@ -34,8 +34,8 @@ public class Bid {
     @Column(name = "TYPE")
     private String type;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ITEM_ID", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "ITEM_ID", nullable = true)
     private Item item;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -6,7 +6,6 @@ import org.hibernate.annotations.*;
 import org.hibernate.annotations.Parameter;
 
 import javax.persistence.*;
-import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -17,11 +16,17 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@NamedEntityGraph(
+        name = User.ENTITY_GRAPH_USER_ITEMS,
+        attributeNodes = {
+                @NamedAttributeNode("items")
+        }
+)
 @FetchProfiles(
-        @FetchProfile(name = User.PROFILE_JOIN_BILLINGS,
+        @FetchProfile(name = User.PROFILE_USER_BIDS,
         fetchOverrides = @FetchProfile.FetchOverride(
                 entity = User.class,
-                association = "additionalBillings",
+                association = "bids",
                 mode = FetchMode.JOIN
         ))
 )
@@ -34,7 +39,8 @@ import java.util.Set;
 @Table(name = "USERS")
 public class User {
 
-    public static final String PROFILE_JOIN_BILLINGS = "User. Fetch profile: join billings";
+    public static final String PROFILE_USER_BIDS = "UserBids";
+    public static final String ENTITY_GRAPH_USER_ITEMS = "UserItems";
 
     public User() {
     }
@@ -113,7 +119,7 @@ public class User {
     )
     private Set<Bid> bids = new HashSet<>();
 
-    @OneToMany(mappedBy = "buyer")
+    @OneToMany(mappedBy = "buyer", cascade = CascadeType.PERSIST)
     private Set<Item> items = new HashSet<>();
 
     public Long getId() {
@@ -176,8 +182,16 @@ public class User {
         return bids;
     }
 
+    public void setBids(Set<Bid> bids) {
+        this.bids = bids;
+    }
+
     public Set<Item> getItems() {
         return items;
+    }
+
+    public void setItems(Set<Item> items) {
+        this.items = items;
     }
 
     @Override

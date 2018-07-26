@@ -12,6 +12,10 @@ import java.util.Set;
 @Table(name = "ITEMS")
 public class Item {
 
+    public Item(String name) {
+        this.name = name;
+    }
+
     @Id
     @GeneratedValue(generator = "ADVANCED_SEQUENCE")
     @GenericGenerator(
@@ -24,8 +28,11 @@ public class Item {
                     )
             }
     )
-    @Column(name = "ID")
+    @Column(name = "ITEM_ID")
     private Long id;
+
+    @Column(name = "ITEM_NAME")
+    private String name;
 
     @ElementCollection
     @CollectionTable(
@@ -73,8 +80,12 @@ public class Item {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Set<Image> getImages() {

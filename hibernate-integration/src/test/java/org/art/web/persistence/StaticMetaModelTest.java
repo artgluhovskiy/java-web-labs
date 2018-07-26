@@ -5,7 +5,6 @@ import org.art.web.persistence.model.User;
 import org.art.web.persistence.model.User_;
 import org.art.web.persistence.model.enums.Role;
 import org.art.web.persistence.utils.JPAProvider;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -27,9 +27,9 @@ public abstract class BillingDetails {
                             value = "DOMAIN_TEST_SEQUENCE"
                     )
             })
+    @Column(name = "BILLING_ID")
     private Long id;
 
-    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     private User owner;
 

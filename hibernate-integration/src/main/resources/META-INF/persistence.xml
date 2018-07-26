@@ -15,7 +15,6 @@
         <class>org.art.web.persistence.model.Item</class>
         <class>org.art.web.persistence.model.Image</class>
         <class>org.art.web.persistence.model.Bid</class>
-        <class>org.art.web.persistence.model.TestEntity</class>
 
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
 
